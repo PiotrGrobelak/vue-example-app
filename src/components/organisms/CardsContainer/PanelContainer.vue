@@ -1,29 +1,30 @@
 <template>
   <div :class="$style.panel">
-    PanelContainer
     <div>
-      <select name="sortBy" id="sortBy" @change="handleCurrentList($event)">
-        <option disabled selected value="">Please select one</option>
-        <option
-          v-for="option in options"
-          :key="option.text"
-          :value="option.value"
-        >
-          {{ option.text }}
-        </option>
-      </select>
-      <span>Selected: {{ selected }}</span>
+      <SearchBar v-model="selected" :handleCurrentList="handleCurrentList" />
     </div>
     <div v-if="patientsState.loading">Loading....</div>
-    <ul v-if="!patientsState.loading">
+    <!-- <ul v-if="!patientsState.loading && !patientsState.error">
       <li v-for="(user, key) in currentList" :key="user.id">
-        {{ user }}<br />{{ key }}
+        {{ user.patient }}<br />{{ key }}
+        {{ user.patients }}
+        <div>{{ user.medicine }}</div>
+      </li>
+    </ul> -->
+    <!-- </ul> -->
+    <ul v-if="renderPatients.length > 0">
+      <li v-for="item in renderPatients" :key="item.id">
+        {{ item.patient.name }}
+        <div v-for="medicine in item.medicines" :key="medicine.id">
+          <p>{{ medicine.medicationName }}</p>
+        </div>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
+import SearchBar from '@/components/molecules/SearchBar';
 import useData from '@/_composables/useData';
 import useMedicinesForPatientsAbove30Year from '@/_composables/useMedicinesForPatientsAbove30Year';
 import useMedicinesForMalePatients from '@/_composables/useMedicinesForMalePatients';
@@ -32,7 +33,10 @@ import { watch, onUpdated, computed, ref } from 'vue';
 
 export default {
   name: 'PanelContainer',
-  setup(props, { emit }) {
+  components: {
+    SearchBar,
+  },
+  setup() {
     const currentList = ref([]);
 
     const { patientsState } = useData();
@@ -70,42 +74,43 @@ export default {
       }
     }
 
+    const renderMedicines = computed(() => {
+      return currentList.value.filter((item) => {
+        return item.medicines;
+      });
+    });
+
+    const renderPatients = computed(() => {
+      return currentList.value.filter((item) => {
+        return item.patient;
+      });
+    });
+
     watch(patientsState, (newState) => {
-      console.log(newState);
+      // console.log(newState);
       if (newState.loading === false) {
         getAllPatients();
         setCurrentList(allPatietns);
       }
     });
 
-    // console.log(allPatietns);
-
     onUpdated(() => {
       console.log('updated!');
+      console.log(renderPatients.value.length);
       console.log(currentList);
     });
 
     return {
-      allPatietns,
       handleCurrentList,
       currentList,
       patientsState,
+      allPatietns,
+      renderPatients,
     };
   },
   data() {
     return {
       selected: 'getAllPatients',
-      options: [
-        { text: 'getAllPatients', value: 'getAllPatients' },
-        {
-          text: 'getMedicinesForMalePatients',
-          value: 'getMedicinesForMalePatients',
-        },
-        {
-          text: 'getMedicinesForPatientsAbove30Year',
-          value: 'getMedicinesForPatientsAbove30Year',
-        },
-      ],
     };
   },
 };
