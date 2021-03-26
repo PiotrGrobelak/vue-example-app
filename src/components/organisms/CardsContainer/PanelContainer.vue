@@ -93,7 +93,6 @@ export default {
     });
 
     watch(patientsState, (newState) => {
-      // console.log(newState);
       if (newState.loading === false) {
         getAllPatients();
         setCurrentList(allPatietns);
@@ -102,16 +101,12 @@ export default {
 
     onUpdated(() => {
       console.log('updated!');
-      // console.log(renderMedicines.value.length);
-      // console.log(currentList.value);
-      console.log(renderMedicines);
     });
 
     return {
       handleCurrentList,
       patientsState,
       renderPatients,
-      currentList,
       renderMedicines,
     };
   },

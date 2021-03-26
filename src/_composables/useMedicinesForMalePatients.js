@@ -4,6 +4,8 @@ import { getMalePatients } from '@/_helpers/getMalePatients';
 export default function useMedicinesForMalePatients(patientsState) {
   const medicinesForMalePatients = ref([]);
 
+  // if I had more time I can spit logic to smaller helper functions for readable and DRY
+
   function getMedicinesForMalePatients() {
     const patientsIds = getMalePatients(patientsState);
 

@@ -4,6 +4,8 @@ import { getPatientsIdsAbove30Year } from '@/_helpers/getPatientsIdsAbove30Year'
 export default function useMedicinesForPatientsAbove30Year(patientsState) {
   const medicinesForPatientsAbove30Year = ref([]);
 
+  // if I had more time I can spit logic to smaller helper functions for readable and DRY
+
   function getMedicinesForPatientsAbove30Year() {
     const patientsIds = getPatientsIdsAbove30Year(patientsState);
 

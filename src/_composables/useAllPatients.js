@@ -4,6 +4,8 @@ import { getPatientsIds } from '@/_helpers/getPatientsIds';
 export default function useAllPatients(patientsState) {
   const allPatietns = ref([]);
 
+  // if I had more time I can spit logic to smaller helper functions for readable and DRY
+
   function getAllPatients() {
     const patientsIds = getPatientsIds(patientsState);
     allPatietns.value = [];
