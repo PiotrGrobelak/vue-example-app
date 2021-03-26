@@ -1,5 +1,5 @@
 <template>
-  <footer :class="$style.footer"><p>Footer</p></footer>
+  <footer :class="$style.footer"><p>Vue first look :)</p></footer>
 </template>
 
 <script>
@@ -12,9 +12,8 @@ export default {
 .footer {
   display: flex;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
   height: 80px;
   background-color: $secondary-color;
-  color: $primary-color;
 }
 </style>

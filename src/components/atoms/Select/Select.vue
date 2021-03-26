@@ -4,6 +4,7 @@
     v-model="selected"
     id="sortBy"
     @change="handleCurrentList($event)"
+    :class="$style.searchSelect"
   >
     <option v-for="option in options" :key="option.text" :value="option.value">
       {{ option.text }}
@@ -48,4 +49,13 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" module>
+.searchSelect {
+  height: 50px;
+  width: 320px;
+  padding: 10px;
+  @include border;
+  background-color: $primary-color;
+  color: $white;
+}
+</style>

@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <p>Search:</p>
+  <div :class="$style.searchBar">
+    <p>Select a filtered list:</p>
     <Select v-bind="$props" />
   </div>
 </template>
@@ -20,4 +20,17 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" module>
+.searchBar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 20px 0;
+  flex-wrap: wrap;
+  p {
+    font-size: 20px;
+    margin-right: 20px;
+  }
+}
+</style>
